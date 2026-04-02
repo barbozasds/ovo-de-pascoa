@@ -4,12 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Fonte bonita -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
-<title>Ovo de Páscoa</title>
+<title>Para Izabelly 💖</title>
 
 <style>
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   margin: 0;
   overflow: hidden;
@@ -18,12 +21,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100dvh;
   flex-direction: column;
   color: white;
 }
 
-/* FUNDO ANIMADO */
+/* FUNDO */
 .fundo {
   position: fixed;
   top: 0;
@@ -45,12 +48,12 @@ body {
 
 @keyframes subir {
   from {
-    transform: translateY(100vh) scale(0.5);
+    transform: translateY(100dvh);
     opacity: 0;
   }
   20% { opacity: 1; }
   to {
-    transform: translateY(-10vh) scale(1);
+    transform: translateY(-10vh);
     opacity: 0;
   }
 }
@@ -64,6 +67,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  transform: translateZ(0);
 }
 
 /* Ovo */
@@ -85,6 +89,7 @@ body {
     inset -8px -10px 20px rgba(0,0,0,0.7),
     inset 5px 5px 15px rgba(255,255,255,0.15);
   transition: 1s ease;
+  will-change: transform;
 }
 
 .topo { z-index: 2; }
@@ -133,9 +138,10 @@ body {
   border-radius: 10px;
   z-index: 3;
   transition: 1s;
+  will-change: transform;
 }
 
-/* Mensagem bonita */
+/* Mensagem */
 .mensagem {
   position: absolute;
   width: 95%;
@@ -145,6 +151,7 @@ body {
   line-height: 1.4;
   z-index: 5;
   text-shadow: 0 0 10px rgba(255,255,255,0.3);
+  will-change: transform, opacity;
 }
 
 .cursor {
@@ -166,8 +173,8 @@ body {
 }
 
 /* Abrir */
-.abrir .topo { transform: translateX(-30vw) rotate(-15deg); }
-.abrir .baixo { transform: translateX(30vw) rotate(15deg); }
+.abrir .topo { transform: translateX(-120%) rotate(-15deg); }
+.abrir .baixo { transform: translateX(120%) rotate(15deg); }
 .abrir .laco { transform: translateY(-40vh); opacity:0; }
 .abrir .mensagem { animation:bounce 1.2s forwards; }
 
@@ -218,7 +225,7 @@ button {
 
 </div>
 
-<button onclick="toggleOvo()" id="btn">Abrir</button>
+<button onclick="toggleOvo()" id="btn">Para Izabelly</button>
 
 <script>
 const mensagem = "Que o nosso amor seja doce, como chocolate, e sempre deixe um gostinho de quero mais. 🤎🐰";
@@ -264,7 +271,7 @@ function toggleOvo(){
   } else {
     c.classList.remove("abrir","rachar");
     reset();
-    b.innerText="Abrir";
+    b.innerText="Para Izabelly";
     aberto=false;
   }
 }
@@ -300,8 +307,8 @@ function particulas(){
     p.style.top="50%";
     c.appendChild(p);
 
-    const x=(Math.random()-0.5)*300;
-    const y=(Math.random()-0.5)*300;
+    const x=(Math.random()-0.5)*150;
+    const y=(Math.random()-0.5)*150;
 
     setTimeout(()=>{
       p.style.transition="1s";
@@ -324,8 +331,8 @@ function gerarPedacos(){
     p.style.top="50%";
     c.appendChild(p);
 
-    const x=(Math.random()-0.5)*200;
-    const y=(Math.random()-0.5)*200;
+    const x=(Math.random()-0.5)*150;
+    const y=(Math.random()-0.5)*150;
 
     setTimeout(()=>{
       p.style.transition="0.8s";
