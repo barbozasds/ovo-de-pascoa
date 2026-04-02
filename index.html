@@ -11,16 +11,51 @@
 
 <style>
 body {
+  margin: 0;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
   background: radial-gradient(circle at top, #4a2a2a, #2a1414);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   flex-direction: column;
-  margin: 0;
+  color: white;
+}
+
+/* FUNDO ANIMADO */
+.fundo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
   overflow: hidden;
 }
 
+.particula-bg {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 220, 180, 0.6);
+  border-radius: 50%;
+  animation: subir linear infinite;
+}
+
+@keyframes subir {
+  from {
+    transform: translateY(100vh) scale(0.5);
+    opacity: 0;
+  }
+  20% { opacity: 1; }
+  to {
+    transform: translateY(-10vh) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Container */
 .container {
   position: relative;
   width: 90vw;
@@ -31,6 +66,7 @@ body {
   align-items: center;
 }
 
+/* Ovo */
 .ovo {
   position: relative;
   width: 45vw;
@@ -99,7 +135,7 @@ body {
   transition: 1s;
 }
 
-/* MENSAGEM MELHORADA */
+/* Mensagem bonita */
 .mensagem {
   position: absolute;
   width: 95%;
@@ -109,7 +145,6 @@ body {
   line-height: 1.4;
   z-index: 5;
   text-shadow: 0 0 10px rgba(255,255,255,0.3);
-  color: #fff;
 }
 
 .cursor {
@@ -123,6 +158,7 @@ body {
   50%{opacity:0}
 }
 
+/* Pulo */
 @keyframes bounce {
   0%{transform:translateY(30px);opacity:0}
   50%{transform:translateY(-25px);opacity:1}
@@ -165,6 +201,8 @@ button {
 
 <body>
 
+<div class="fundo" id="fundo"></div>
+
 <div class="container" id="container">
 
   <div class="ovo">
@@ -183,11 +221,29 @@ button {
 <button onclick="toggleOvo()" id="btn">Abrir</button>
 
 <script>
-const mensagem = "Que o nosso amor seja doce, como chocolate, e sempre deixe um gostinho de quero mais.🤎🐰";
+const mensagem = "Que o nosso amor seja doce, como chocolate, e sempre deixe um gostinho de quero mais. 🤎🐰";
 
 let aberto=false;
 let timeout;
 
+/* FUNDO */
+function criarFundo() {
+  const fundo = document.getElementById("fundo");
+
+  for (let i = 0; i < 40; i++) {
+    const p = document.createElement("div");
+    p.classList.add("particula-bg");
+
+    p.style.left = Math.random() * 100 + "vw";
+    p.style.animationDuration = (5 + Math.random() * 5) + "s";
+    p.style.animationDelay = Math.random() * 5 + "s";
+
+    fundo.appendChild(p);
+  }
+}
+criarFundo();
+
+/* BOTÃO */
 function toggleOvo(){
   const c=document.getElementById("container");
   const b=document.getElementById("btn");
@@ -219,6 +275,7 @@ function reset(){
   clearTimeout(timeout);
 }
 
+/* Digitação */
 function digitar(){
   let i=0;
   const el=document.getElementById("texto");
@@ -232,6 +289,7 @@ function digitar(){
   setTimeout(loop,700);
 }
 
+/* Partículas */
 function particulas(){
   const c=document.getElementById("container");
 
@@ -255,6 +313,7 @@ function particulas(){
   }
 }
 
+/* Pedaços */
 function gerarPedacos(){
   const c=document.getElementById("container");
 
