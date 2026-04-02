@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Fonte bonita -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+<title>Ovo de Páscoa</title>
+
+<style>
+body {
+  background: radial-gradient(circle at top, #4a2a2a, #2a1414);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  margin: 0;
+  overflow: hidden;
+}
+
+.container {
+  position: relative;
+  width: 90vw;
+  max-width: 350px;
+  height: 45vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ovo {
+  position: relative;
+  width: 45vw;
+  max-width: 170px;
+  height: 60vw;
+  max-height: 210px;
+}
+
+.parte {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50% 50% 45% 45%;
+  background: radial-gradient(circle at 30% 30%, #8b4513, #5a2e1f 60%, #2b140f);
+  box-shadow:
+    inset -8px -10px 20px rgba(0,0,0,0.7),
+    inset 5px 5px 15px rgba(255,255,255,0.15);
+  transition: 1s ease;
+}
+
+.topo { z-index: 2; }
+.baixo { filter: brightness(0.85); }
+
+/* Rachadura */
+.trinca::before {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 100%;
+  left: 50%;
+  transform: translateX(-50%) scaleY(0);
+  transform-origin: center;
+  background: #1a0d0a;
+  clip-path: polygon(
+    50% 0%,48% 10%,52% 20%,47% 30%,53% 40%,
+    49% 50%,54% 60%,48% 70%,52% 80%,47% 90%,50% 100%
+  );
+  transition: 0.4s;
+}
+
+.rachar .trinca::before {
+  transform: translateX(-50%) scaleY(1);
+}
+
+/* Tremida */
+@keyframes shake {
+  25%{transform:translateX(-3px)}
+  50%{transform:translateX(3px)}
+  75%{transform:translateX(-3px)}
+}
+
+.rachar .ovo {
+  animation: shake 0.3s;
+}
+
+/* Laço */
+.laco {
+  position: absolute;
+  width: 110%;
+  height: 8%;
+  background: #ff4d6d;
+  top: 45%;
+  left: -5%;
+  border-radius: 10px;
+  z-index: 3;
+  transition: 1s;
+}
+
+/* MENSAGEM MELHORADA */
+.mensagem {
+  position: absolute;
+  width: 95%;
+  text-align: center;
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(22px, 6vw, 32px);
+  line-height: 1.4;
+  z-index: 5;
+  text-shadow: 0 0 10px rgba(255,255,255,0.3);
+  color: #fff;
+}
+
+.cursor {
+  width:2px;
+  background:white;
+  display:inline-block;
+  animation:blink 1s infinite;
+}
+
+@keyframes blink {
+  50%{opacity:0}
+}
+
+@keyframes bounce {
+  0%{transform:translateY(30px);opacity:0}
+  50%{transform:translateY(-25px);opacity:1}
+  100%{transform:translateY(0)}
+}
+
+/* Abrir */
+.abrir .topo { transform: translateX(-30vw) rotate(-15deg); }
+.abrir .baixo { transform: translateX(30vw) rotate(15deg); }
+.abrir .laco { transform: translateY(-40vh); opacity:0; }
+.abrir .mensagem { animation:bounce 1.2s forwards; }
+
+/* Partículas */
+.particula, .pedaco {
+  position:absolute;
+  border-radius:50%;
+}
+
+.particula {
+  width:5px;height:5px;background:#ffd166;
+}
+
+.pedaco {
+  width:8px;height:8px;background:#5a2e1f;
+}
+
+/* Botão */
+button {
+  margin-top: 30px;
+  padding: 12px 20px;
+  border: none;
+  background: #ff4d6d;
+  color: white;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="container">
+
+  <div class="ovo">
+    <div class="parte topo"></div>
+    <div class="parte baixo"></div>
+    <div class="trinca"></div>
+    <div class="laco"></div>
+  </div>
+
+  <div class="mensagem">
+    <span id="texto"></span><span class="cursor"></span>
+  </div>
+
+</div>
+
+<button onclick="toggleOvo()" id="btn">Abrir</button>
+
+<script>
+const mensagem = "Que o nosso amor seja doce, como chocolate, e sempre deixe um gostinho de quero mais.🤎🐰";
+
+let aberto=false;
+let timeout;
+
+function toggleOvo(){
+  const c=document.getElementById("container");
+  const b=document.getElementById("btn");
+
+  if(!aberto){
+    c.classList.add("rachar");
+
+    setTimeout(()=>gerarPedacos(),150);
+
+    setTimeout(()=>{
+      c.classList.add("abrir");
+      digitar();
+      particulas();
+    },400);
+
+    b.innerText="Fechar";
+    aberto=true;
+  } else {
+    c.classList.remove("abrir","rachar");
+    reset();
+    b.innerText="Abrir";
+    aberto=false;
+  }
+}
+
+function reset(){
+  document.getElementById("texto").innerHTML="";
+  document.querySelectorAll(".particula,.pedaco").forEach(e=>e.remove());
+  clearTimeout(timeout);
+}
+
+function digitar(){
+  let i=0;
+  const el=document.getElementById("texto");
+
+  function loop(){
+    if(i<mensagem.length){
+      el.innerHTML+=mensagem[i++];
+      timeout=setTimeout(loop,40);
+    }
+  }
+  setTimeout(loop,700);
+}
+
+function particulas(){
+  const c=document.getElementById("container");
+
+  for(let i=0;i<30;i++){
+    const p=document.createElement("div");
+    p.className="particula";
+    p.style.left="50%";
+    p.style.top="50%";
+    c.appendChild(p);
+
+    const x=(Math.random()-0.5)*300;
+    const y=(Math.random()-0.5)*300;
+
+    setTimeout(()=>{
+      p.style.transition="1s";
+      p.style.transform=`translate(${x}px,${y}px)`;
+      p.style.opacity=1;
+    },50);
+
+    setTimeout(()=>p.remove(),1000);
+  }
+}
+
+function gerarPedacos(){
+  const c=document.getElementById("container");
+
+  for(let i=0;i<15;i++){
+    const p=document.createElement("div");
+    p.className="pedaco";
+    p.style.left="50%";
+    p.style.top="50%";
+    c.appendChild(p);
+
+    const x=(Math.random()-0.5)*200;
+    const y=(Math.random()-0.5)*200;
+
+    setTimeout(()=>{
+      p.style.transition="0.8s";
+      p.style.transform=`translate(${x}px,${y}px) rotate(360deg)`;
+      p.style.opacity=1;
+    },50);
+
+    setTimeout(()=>p.remove(),800);
+  }
+}
+</script>
+
+</body>
+</html>
