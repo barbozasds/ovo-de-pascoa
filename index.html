@@ -9,209 +9,189 @@
 <title>Para Izabelly 💖</title>
 
 <style>
-* {
-  -webkit-tap-highlight-color: transparent;
-}
+* { -webkit-tap-highlight-color: transparent; }
 
 body {
-  margin: 0;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
-  background: radial-gradient(circle at top, #4a2a2a, #2a1414);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100dvh;
-  flex-direction: column;
-  color: white;
+  margin:0;
+  overflow:hidden;
+  height:100dvh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  background: radial-gradient(circle at top,#4a2a2a,#2a1414);
+  color:white;
 }
+
+/* INTRO */
+.intro {
+  position:fixed;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:10;
+  background:#1a0d0d;
+  transition:1s;
+}
+
+.intro-texto {
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(28px,7vw,42px);
+  text-align:center;
+  animation: brilho 2s infinite alternate;
+}
+
+@keyframes brilho {
+  from { text-shadow:0 0 5px #fff; }
+  to { text-shadow:0 0 20px #ffd166; }
+}
+
+.fade-out { opacity:0; pointer-events:none; }
 
 /* FUNDO */
-.fundo {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  overflow: hidden;
-}
+.fundo { position:fixed; width:100%; height:100%; z-index:-1; }
 
 .particula-bg {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: rgba(255, 220, 180, 0.6);
-  border-radius: 50%;
-  animation: subir linear infinite;
+  position:absolute;
+  width:4px;height:4px;
+  background:rgba(255,220,180,.6);
+  border-radius:50%;
+  animation:subir linear infinite;
 }
 
 @keyframes subir {
-  from {
-    transform: translateY(100dvh);
-    opacity: 0;
-  }
-  20% { opacity: 1; }
-  to {
-    transform: translateY(-10vh);
-    opacity: 0;
-  }
+  from { transform:translateY(100dvh); opacity:0;}
+  20% {opacity:1;}
+  to { transform:translateY(-10vh); opacity:0;}
 }
 
-/* Container */
+/* CONTAINER */
 .container {
-  position: relative;
-  width: 90vw;
-  max-width: 350px;
-  height: 45vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: translateZ(0);
+  position:relative;
+  width:90vw;
+  max-width:350px;
+  height:45vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-/* Ovo */
+/* OVO */
 .ovo {
-  position: relative;
-  width: 45vw;
-  max-width: 170px;
-  height: 60vw;
-  max-height: 210px;
+  position:relative;
+  width:45vw;
+  max-width:170px;
+  height:60vw;
+  max-height:210px;
 }
 
 .parte {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50% 50% 45% 45%;
+  position:absolute;
+  width:100%;
+  height:100%;
+  border-radius:50% 50% 45% 45%;
   background: radial-gradient(circle at 30% 30%, #8b4513, #5a2e1f 60%, #2b140f);
-  box-shadow:
-    inset -8px -10px 20px rgba(0,0,0,0.7),
-    inset 5px 5px 15px rgba(255,255,255,0.15);
-  transition: 1s ease;
-  will-change: transform;
+  transition:1s;
 }
 
-.topo { z-index: 2; }
-.baixo { filter: brightness(0.85); }
+.topo { z-index:2; }
+.baixo { filter:brightness(.85); }
 
-/* Rachadura */
+/* 🔥 RACHADURA CORRIGIDA DEFINITIVA */
+.trinca {
+  position:absolute;
+  width:100%;
+  height:100%;
+}
+
 .trinca::before {
-  content: "";
-  position: absolute;
-  width: 4px;
-  height: 100%;
-  left: 50%;
-  transform: translateX(-50%) scaleY(0);
-  transform-origin: center;
-  background: #1a0d0a;
-  clip-path: polygon(
-    50% 0%,48% 10%,52% 20%,47% 30%,53% 40%,
-    49% 50%,54% 60%,48% 70%,52% 80%,47% 90%,50% 100%
-  );
-  transition: 0.4s;
+  content:"";
+  position:absolute;
+  width:4px;
+  height:100%;
+  left:50%;
+  transform:translateX(-50%) scaleY(0);
+  transform-origin:center;
+  background:#1a0d0a;
+  opacity:0;
+  transition: transform 0.4s ease, opacity 0.3s ease;
+  backface-visibility:hidden;
 }
 
 .rachar .trinca::before {
-  transform: translateX(-50%) scaleY(1);
+  transform:translateX(-50%) scaleY(1);
+  opacity:1;
 }
 
-/* Tremida */
-@keyframes shake {
-  25%{transform:translateX(-3px)}
-  50%{transform:translateX(3px)}
-  75%{transform:translateX(-3px)}
+/* 🚨 REMOVE TOTALMENTE AO ABRIR */
+.abrir .trinca::before {
+  display:none;
 }
 
-.rachar .ovo {
-  animation: shake 0.3s;
-}
-
-/* Laço */
+/* LAÇO */
 .laco {
-  position: absolute;
-  width: 110%;
-  height: 8%;
-  background: #ff4d6d;
-  top: 45%;
-  left: -5%;
-  border-radius: 10px;
-  z-index: 3;
-  transition: 1s;
-  will-change: transform;
-}
-
-/* Mensagem */
-.mensagem {
-  position: absolute;
-  width: 95%;
-  text-align: center;
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(22px, 6vw, 32px);
-  line-height: 1.4;
-  z-index: 5;
-  text-shadow: 0 0 10px rgba(255,255,255,0.3);
-  will-change: transform, opacity;
-}
-
-.cursor {
-  width:2px;
-  background:white;
-  display:inline-block;
-  animation:blink 1s infinite;
-}
-
-@keyframes blink {
-  50%{opacity:0}
-}
-
-/* Pulo */
-@keyframes bounce {
-  0%{transform:translateY(30px);opacity:0}
-  50%{transform:translateY(-25px);opacity:1}
-  100%{transform:translateY(0)}
-}
-
-/* Abrir */
-.abrir .topo { transform: translateX(-120%) rotate(-15deg); }
-.abrir .baixo { transform: translateX(120%) rotate(15deg); }
-.abrir .laco { transform: translateY(-40vh); opacity:0; }
-.abrir .mensagem { animation:bounce 1.2s forwards; }
-
-/* Partículas */
-.particula, .pedaco {
   position:absolute;
+  width:110%;
+  height:8%;
+  background:#ff4d6d;
+  top:45%;
+  left:-5%;
+  border-radius:10px;
+  z-index:3;
+  transition:1s;
+}
+
+.laco::before {
+  content:"";
+  position:absolute;
+  width:20%;
+  height:200%;
+  background:#ff1f4d;
   border-radius:50%;
+  top:-50%;
+  left:40%;
 }
 
-.particula {
-  width:5px;height:5px;background:#ffd166;
+/* ABRIR */
+.abrir .topo { transform:translateX(-120%) rotate(-15deg); }
+.abrir .baixo { transform:translateX(120%) rotate(15deg); }
+.abrir .laco { transform:translateY(-40vh); opacity:0; }
+
+/* MENSAGEM */
+.mensagem {
+  position:absolute;
+  width:95%;
+  text-align:center;
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(22px,6vw,32px);
+  z-index:5;
 }
 
-.pedaco {
-  width:8px;height:8px;background:#5a2e1f;
-}
-
-/* Botão */
+/* BOTÃO */
 button {
-  margin-top: 30px;
-  padding: 12px 20px;
-  border: none;
-  background: #ff4d6d;
-  color: white;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
+  margin-top:30px;
+  padding:12px 20px;
+  border:none;
+  background:#ff4d6d;
+  color:white;
+  border-radius:8px;
 }
 </style>
 </head>
 
 <body>
 
+<div class="intro" id="intro">
+  <div class="intro-texto">
+    <span id="introTexto"></span>
+  </div>
+</div>
+
 <div class="fundo" id="fundo"></div>
 
-<div class="container" id="container">
-
+<div class="container" id="container" style="opacity:0;">
   <div class="ovo">
     <div class="parte topo"></div>
     <div class="parte baixo"></div>
@@ -220,69 +200,77 @@ button {
   </div>
 
   <div class="mensagem">
-    <span id="texto"></span><span class="cursor"></span>
+    <span id="texto"></span>
   </div>
-
 </div>
 
-<button onclick="toggleOvo()" id="btn">Para Izabelly</button>
+<button onclick="toggleOvo()" id="btn" style="opacity:0;">Para Izabelly</button>
 
 <script>
-const mensagem = "Que o nosso amor seja doce, como chocolate, e sempre deixe um gostinho de quero mais. 🤎🐰";
+const mensagem="Que o nosso amor seja doce, como chocolate, e sempre deixe um gostinho de quero mais. 🤎🐰";
+const introMsg="Feliz Páscoa, minha Coelhinha";
 
 let aberto=false;
-let timeout;
+
+/* INTRO */
+function digitarIntro(){
+  let i=0;
+  const el=document.getElementById("introTexto");
+
+  function loop(){
+    if(i<introMsg.length){
+      el.innerHTML+=introMsg[i++];
+      setTimeout(loop,60);
+    } else {
+      setTimeout(iniciar,1500);
+    }
+  }
+  loop();
+}
+
+function iniciar(){
+  document.getElementById("intro").classList.add("fade-out");
+
+  setTimeout(()=>{
+    document.getElementById("container").style.opacity=1;
+    document.getElementById("btn").style.opacity=1;
+  },800);
+}
 
 /* FUNDO */
-function criarFundo() {
-  const fundo = document.getElementById("fundo");
-
-  for (let i = 0; i < 40; i++) {
-    const p = document.createElement("div");
-    p.classList.add("particula-bg");
-
-    p.style.left = Math.random() * 100 + "vw";
-    p.style.animationDuration = (5 + Math.random() * 5) + "s";
-    p.style.animationDelay = Math.random() * 5 + "s";
-
-    fundo.appendChild(p);
+function fundo(){
+  const f=document.getElementById("fundo");
+  for(let i=0;i<40;i++){
+    let p=document.createElement("div");
+    p.className="particula-bg";
+    p.style.left=Math.random()*100+"vw";
+    p.style.animationDuration=(5+Math.random()*5)+"s";
+    f.appendChild(p);
   }
 }
-criarFundo();
 
-/* BOTÃO */
+fundo();
+digitarIntro();
+
+/* OVO */
 function toggleOvo(){
   const c=document.getElementById("container");
   const b=document.getElementById("btn");
 
   if(!aberto){
     c.classList.add("rachar");
-
-    setTimeout(()=>gerarPedacos(),150);
-
-    setTimeout(()=>{
-      c.classList.add("abrir");
-      digitar();
-      particulas();
-    },400);
-
+    setTimeout(()=>c.classList.add("abrir"),400);
+    setTimeout(()=>digitar(),600);
     b.innerText="Fechar";
     aberto=true;
   } else {
     c.classList.remove("abrir","rachar");
-    reset();
+    document.getElementById("texto").innerHTML="";
     b.innerText="Para Izabelly";
     aberto=false;
   }
 }
 
-function reset(){
-  document.getElementById("texto").innerHTML="";
-  document.querySelectorAll(".particula,.pedaco").forEach(e=>e.remove());
-  clearTimeout(timeout);
-}
-
-/* Digitação */
 function digitar(){
   let i=0;
   const el=document.getElementById("texto");
@@ -290,58 +278,10 @@ function digitar(){
   function loop(){
     if(i<mensagem.length){
       el.innerHTML+=mensagem[i++];
-      timeout=setTimeout(loop,40);
+      setTimeout(loop,40);
     }
   }
-  setTimeout(loop,700);
-}
-
-/* Partículas */
-function particulas(){
-  const c=document.getElementById("container");
-
-  for(let i=0;i<30;i++){
-    const p=document.createElement("div");
-    p.className="particula";
-    p.style.left="50%";
-    p.style.top="50%";
-    c.appendChild(p);
-
-    const x=(Math.random()-0.5)*150;
-    const y=(Math.random()-0.5)*150;
-
-    setTimeout(()=>{
-      p.style.transition="1s";
-      p.style.transform=`translate(${x}px,${y}px)`;
-      p.style.opacity=1;
-    },50);
-
-    setTimeout(()=>p.remove(),1000);
-  }
-}
-
-/* Pedaços */
-function gerarPedacos(){
-  const c=document.getElementById("container");
-
-  for(let i=0;i<15;i++){
-    const p=document.createElement("div");
-    p.className="pedaco";
-    p.style.left="50%";
-    p.style.top="50%";
-    c.appendChild(p);
-
-    const x=(Math.random()-0.5)*150;
-    const y=(Math.random()-0.5)*150;
-
-    setTimeout(()=>{
-      p.style.transition="0.8s";
-      p.style.transform=`translate(${x}px,${y}px) rotate(360deg)`;
-      p.style.opacity=1;
-    },50);
-
-    setTimeout(()=>p.remove(),800);
-  }
+  loop();
 }
 </script>
 
